@@ -29,8 +29,8 @@ public class Alarm {
         alarmOn = true;
     }
 
-    protected boolean isNotSafe(double psiPressureValue) {
-        return ! safetyRange.contains(psiPressureValue);
+    protected boolean isNotSafe(double value) {
+        return ! safetyRange.contains(value);
     }
 
     protected double probePressureValue() {
