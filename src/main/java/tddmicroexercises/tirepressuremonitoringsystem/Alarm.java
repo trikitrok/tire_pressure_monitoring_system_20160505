@@ -8,6 +8,14 @@ public class Alarm {
 
     private boolean alarmOn = false;
 
+    public Alarm() {
+
+    }
+
+    public Alarm(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
     public void check() {
         double psiPressureValue = probePressureValue();
 

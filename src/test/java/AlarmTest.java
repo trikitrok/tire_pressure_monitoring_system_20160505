@@ -1,8 +1,11 @@
 import org.junit.Test;
 import tddmicroexercises.tirepressuremonitoringsystem.Alarm;
+import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class AlarmTest {
     @Test
@@ -43,6 +46,16 @@ public class AlarmTest {
         alarm.check();
 
         assertThat(alarm.isAlarmOn(), is(true));
+    }
+
+    @Test
+    public void alarm_collaborates_with_injected_sensor() {
+        Sensor sensor = mock(Sensor.class);
+        Alarm alarm = new Alarm(sensor);
+
+        alarm.check();
+
+        verify(sensor).popNextPressurePsiValue();
     }
 
     class FakeAlarm extends Alarm {
