@@ -6,11 +6,18 @@ import static org.hamcrest.core.Is.is;
 
 public class AlarmTest {
     @Test
-    public void alarm_is_on_when_pressure_is_too_low() { // flaky test!!
-        Alarm alarm = new Alarm();
+    public void alarm_is_on_when_pressure_is_too_low() {
+        Alarm alarm = new FakeAlarm();
 
         alarm.check();
 
         assertThat(alarm.isAlarmOn(), is(true));
+    }
+
+    class FakeAlarm extends Alarm {
+        @Override
+        protected double probePressureValue() {
+            return 5.0;
+        }
     }
 }
