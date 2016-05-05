@@ -1,5 +1,6 @@
 import org.junit.Test;
 import tddmicroexercises.tirepressuremonitoringsystem.Alarm;
+import tddmicroexercises.tirepressuremonitoringsystem.SafetyRange;
 import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +62,6 @@ public class AlarmTest {
     }
 
     protected Alarm anAlarmUsingA(Sensor sensor) {
-        return new Alarm(sensor);
+        return new Alarm(sensor, new SafetyRange(17, 21));
     }
 }

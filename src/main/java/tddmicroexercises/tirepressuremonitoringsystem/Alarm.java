@@ -8,13 +8,13 @@ public class Alarm {
     private boolean alarmOn;
 
     public Alarm() {
-        this(new Sensor());
+        this(new Sensor(), new SafetyRange(17, 21));
     }
 
-    public Alarm(Sensor sensor) {
+    public Alarm(Sensor sensor, SafetyRange safetyRange) {
         alarmOn = false;
         this.sensor = sensor;
-        safetyRange = new SafetyRange(LowPressureThreshold, HighPressureThreshold);
+        this.safetyRange = safetyRange;
     }
 
     public void check() {
@@ -39,19 +39,5 @@ public class Alarm {
 
     public boolean isAlarmOn() {
         return alarmOn;
-    }
-
-    class SafetyRange {
-        private final double lowerThreshold;
-        private final double higherThreshold;
-
-        public SafetyRange(double lowerThreshold, double higherThreshold) {
-            this.lowerThreshold = lowerThreshold;
-            this.higherThreshold = higherThreshold;
-        }
-
-        public boolean contains(double value) {
-            return !(value < lowerThreshold || higherThreshold < value);
-        }
     }
 }
