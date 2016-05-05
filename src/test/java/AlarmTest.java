@@ -4,7 +4,8 @@ import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AlarmTest {
     @Test
@@ -49,7 +50,7 @@ public class AlarmTest {
 
     protected Sensor sensorThatProbes(double value) {
         Sensor sensor = mock(Sensor.class);
-        doReturn(value).when(sensor).popNextPressurePsiValue();
+        when(sensor.popNextPressurePsiValue()).thenReturn(value);
         return sensor;
     }
 
