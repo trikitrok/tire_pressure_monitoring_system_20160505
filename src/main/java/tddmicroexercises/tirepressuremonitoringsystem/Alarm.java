@@ -21,7 +21,7 @@ public class Alarm {
     }
 
     public void check() {
-        double value = probePressureValue();
+        double value = sensor.probeValue();
 
         if (isNotSafe(value)) {
             activateAlarm();
@@ -34,10 +34,6 @@ public class Alarm {
 
     protected boolean isNotSafe(double value) {
         return ! safetyRange.contains(value);
-    }
-
-    protected double probePressureValue() {
-        return sensor.probeValue();
     }
 
     public boolean isAlarmOn() {
