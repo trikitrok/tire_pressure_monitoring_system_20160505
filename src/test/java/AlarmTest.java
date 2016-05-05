@@ -32,15 +32,32 @@ public class AlarmTest {
         assertThat(alarm.isAlarmOn(), is(true));
     }
 
-    class FakeAlarm extends Alarm {
-        private final double probedValue;
+    @Test
+    public void once_the_alarm_is_on_it_keeps_on_regardless_new_probed_values() {
+        Alarm alarm = new FakeAlarm(30.0, 18.0);
 
-        public FakeAlarm(double probedValue) {
-            this.probedValue = probedValue;
+        alarm.check();
+
+        assertThat(alarm.isAlarmOn(), is(true));
+
+        alarm.check();
+
+        assertThat(alarm.isAlarmOn(), is(true));
+    }
+
+    class FakeAlarm extends Alarm {
+        private final double[] probedValues;
+        private int index;
+
+        public FakeAlarm(double ... probedValue) {
+            this.probedValues = probedValue;
+            this.index = 0;
         }
 
         @Override
         protected double probePressureValue() {
+            double probedValue = probedValues[index];
+            index++;
             return probedValue;
         }
     }
