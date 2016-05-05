@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 public class AlarmTest {
     @Test
     public void alarm_is_on_when_pressure_is_too_low() {
-        Alarm alarm = new Alarm(sensorThatProbes(5.0));
+        Alarm alarm = anAlarmUsingA(sensorThatProbes(5.0));
 
         alarm.check();
 
@@ -19,7 +19,7 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_off_when_pressure_is_inside_safety_range() {
-        Alarm alarm = new Alarm(sensorThatProbes(18.0));
+        Alarm alarm = anAlarmUsingA(sensorThatProbes(18.0));
 
         alarm.check();
 
@@ -28,7 +28,7 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_on_when_pressure_is_too_high() {
-        Alarm alarm = new Alarm(sensorThatProbes(30.0));
+        Alarm alarm = anAlarmUsingA(sensorThatProbes(30.0));
 
         alarm.check();
 
@@ -37,7 +37,7 @@ public class AlarmTest {
 
     @Test
     public void once_the_alarm_is_on_it_keeps_on_regardless_new_probed_values() {
-        Alarm alarm = new Alarm(sensorThatProbes(30.0, 18.0));
+        Alarm alarm = anAlarmUsingA(sensorThatProbes(30.0, 18.0));
 
         alarm.check();
 
@@ -58,5 +58,9 @@ public class AlarmTest {
         Sensor sensor = mock(Sensor.class);
         when(sensor.popNextPressurePsiValue()).thenReturn(value1, value2);
         return sensor;
+    }
+
+    protected Alarm anAlarmUsingA(Sensor sensor) {
+        return new Alarm(sensor);
     }
 }
