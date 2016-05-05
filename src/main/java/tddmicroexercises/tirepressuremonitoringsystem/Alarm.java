@@ -17,9 +17,9 @@ public class Alarm {
     }
 
     public void check() {
-        double psiPressureValue = probePressureValue();
+        double value = probePressureValue();
 
-        if (isNotSafe(psiPressureValue)) {
+        if (isNotSafe(value)) {
             activateAlarm();
         }
     }
