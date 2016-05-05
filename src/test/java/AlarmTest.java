@@ -4,9 +4,7 @@ import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class AlarmTest {
     @Test
@@ -38,7 +36,7 @@ public class AlarmTest {
 
     @Test
     public void once_the_alarm_is_on_it_keeps_on_regardless_new_probed_values() {
-        Alarm alarm = new FakeAlarm(30.0, 18.0);
+        Alarm alarm = new Alarm(sensorThatProbes(30.0, 18.0));
 
         alarm.check();
 
@@ -47,16 +45,6 @@ public class AlarmTest {
         alarm.check();
 
         assertThat(alarm.isAlarmOn(), is(true));
-    }
-
-    @Test
-    public void alarm_collaborates_with_injected_sensor() {
-        Sensor sensor = mock(Sensor.class);
-        Alarm alarm = new Alarm(sensor);
-
-        alarm.check();
-
-        verify(sensor).popNextPressurePsiValue();
     }
 
     protected Sensor sensorThatProbes(double value) {
@@ -65,20 +53,9 @@ public class AlarmTest {
         return sensor;
     }
 
-    class FakeAlarm extends Alarm {
-        private final double[] probedValues;
-        private int index;
-
-        public FakeAlarm(double ... probedValue) {
-            this.probedValues = probedValue;
-            this.index = 0;
-        }
-
-        @Override
-        protected double probePressureValue() {
-            double probedValue = probedValues[index];
-            index++;
-            return probedValue;
-        }
+    protected Sensor sensorThatProbes(double value1, double value2) {
+        Sensor sensor = mock(Sensor.class);
+        when(sensor.popNextPressurePsiValue()).thenReturn(value1, value2);
+        return sensor;
     }
 }
