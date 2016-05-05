@@ -2,13 +2,11 @@ package tddmicroexercises.tirepressuremonitoringsystem.tests;
 
 import org.junit.Test;
 import tddmicroexercises.tirepressuremonitoringsystem.Alarm;
-import tddmicroexercises.tirepressuremonitoringsystem.PressureSensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static tddmicroexercises.tirepressuremonitoringsystem.tests.helpers.AlarmBuilder.anAlarm;
+import static tddmicroexercises.tirepressuremonitoringsystem.tests.helpers.SensorFactory.sensorThatProbes;
 
 public class AlarmTest {
     @Test
@@ -57,17 +55,5 @@ public class AlarmTest {
         alarm.check();
 
         assertThat(alarm.isAlarmOn(), is(true));
-    }
-
-    protected PressureSensor sensorThatProbes(double value) {
-        PressureSensor sensor = mock(PressureSensor.class);
-        when(sensor.probeValue()).thenReturn(value);
-        return sensor;
-    }
-
-    protected PressureSensor sensorThatProbes(double value1, double value2) {
-        PressureSensor sensor = mock(PressureSensor.class);
-        when(sensor.probeValue()).thenReturn(value1, value2);
-        return sensor;
     }
 }
