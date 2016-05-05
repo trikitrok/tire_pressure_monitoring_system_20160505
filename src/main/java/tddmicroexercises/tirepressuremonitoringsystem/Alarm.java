@@ -3,17 +3,19 @@ package tddmicroexercises.tirepressuremonitoringsystem;
 public class Alarm {
     private final double LowPressureThreshold = 17;
     private final double HighPressureThreshold = 21;
+    private final SafetyRange safetyRange;
 
     private Sensor sensor = new Sensor();
 
     private boolean alarmOn = false;
 
     public Alarm() {
-
+        safetyRange = new SafetyRange(LowPressureThreshold, HighPressureThreshold);
     }
 
     public Alarm(Sensor sensor) {
         this.sensor = sensor;
+        safetyRange = new SafetyRange(LowPressureThreshold, HighPressureThreshold);
     }
 
     public void check() {
@@ -29,7 +31,7 @@ public class Alarm {
     }
 
     protected boolean isNotSafe(double psiPressureValue) {
-        return psiPressureValue < LowPressureThreshold || HighPressureThreshold < psiPressureValue;
+        return ! safetyRange.contains(psiPressureValue);
     }
 
     protected double probePressureValue() {
@@ -38,5 +40,19 @@ public class Alarm {
 
     public boolean isAlarmOn() {
         return alarmOn;
+    }
+
+    class SafetyRange {
+        private final double lowerThreshold;
+        private final double higherThreshold;
+
+        public SafetyRange(double lowerThreshold, double higherThreshold) {
+            this.lowerThreshold = lowerThreshold;
+            this.higherThreshold = higherThreshold;
+        }
+
+        public boolean contains(double value) {
+            return !(value < lowerThreshold || higherThreshold < value);
+        }
     }
 }
