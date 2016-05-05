@@ -2,6 +2,7 @@ import org.junit.Test;
 import tddmicroexercises.tirepressuremonitoringsystem.Alarm;
 import tddmicroexercises.tirepressuremonitoringsystem.SafetyRange;
 import tddmicroexercises.tirepressuremonitoringsystem.PressureSensor;
+import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -11,7 +12,9 @@ import static org.mockito.Mockito.when;
 public class AlarmTest {
     @Test
     public void alarm_is_on_when_probed_value_is_too_low() {
-        Alarm alarm = anAlarmUsingA(sensorThatProbes(5.0));
+        Alarm alarm = AlarmBuilder.anAlarm()
+            .withSafetyRange(17.0, 21.0)
+            .using(sensorThatProbes(5.0)).build();
 
         alarm.check();
 
@@ -20,7 +23,9 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_off_when_probed_value_is_inside_safety_range() {
-        Alarm alarm = anAlarmUsingA(sensorThatProbes(18.0));
+        Alarm alarm = AlarmBuilder.anAlarm()
+            .withSafetyRange(17.0, 21.0)
+            .using(sensorThatProbes(18.0)).build();
 
         alarm.check();
 
@@ -29,7 +34,9 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_on_when_probed_value_is_too_high() {
-        Alarm alarm = anAlarmUsingA(sensorThatProbes(30.0));
+        Alarm alarm = AlarmBuilder.anAlarm()
+            .withSafetyRange(17.0, 21.0)
+            .using(sensorThatProbes(30.0)).build();
 
         alarm.check();
 
@@ -38,7 +45,9 @@ public class AlarmTest {
 
     @Test
     public void once_the_alarm_is_on_it_keeps_on_regardless_of_new_probed_values() {
-        Alarm alarm = anAlarmUsingA(sensorThatProbes(30.0, 18.0));
+        Alarm alarm = AlarmBuilder.anAlarm()
+            .withSafetyRange(17.0, 21.0)
+            .using(sensorThatProbes(30.0, 18.0)).build();
 
         alarm.check();
 
@@ -61,7 +70,26 @@ public class AlarmTest {
         return sensor;
     }
 
-    protected Alarm anAlarmUsingA(PressureSensor sensor) {
-        return new Alarm(sensor, new SafetyRange(17, 21));
+    static class AlarmBuilder {
+        private SafetyRange safetyRange;
+        private Sensor sensor;
+
+        public static AlarmBuilder anAlarm() {
+            return new AlarmBuilder();
+        }
+
+        public AlarmBuilder withSafetyRange(double lowerThreshold, double higherThreshold) {
+            this.safetyRange = new SafetyRange(lowerThreshold, higherThreshold);
+            return this;
+        }
+
+        public AlarmBuilder using(Sensor sensor) {
+            this.sensor = sensor;
+            return this;
+        }
+
+        public Alarm build() {
+            return new Alarm(sensor, safetyRange);
+        }
     }
 }
