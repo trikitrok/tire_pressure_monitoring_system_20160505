@@ -29,7 +29,7 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_on_when_pressure_is_too_high() {
-        Alarm alarm = new FakeAlarm(30.0);
+        Alarm alarm = new Alarm(sensorThatProbes(30.0));
 
         alarm.check();
 
