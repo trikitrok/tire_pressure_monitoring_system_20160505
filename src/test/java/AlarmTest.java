@@ -22,7 +22,9 @@ public class AlarmTest {
 
     @Test
     public void alarm_is_off_when_pressure_is_inside_safety_range() {
-        Alarm alarm = new FakeAlarm(18.0);
+        Sensor sensor = mock(Sensor.class);
+        doReturn(18.0).when(sensor).popNextPressurePsiValue();
+        Alarm alarm = new Alarm(sensor);
 
         alarm.check();
 
