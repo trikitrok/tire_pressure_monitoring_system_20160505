@@ -46,7 +46,12 @@ public class AlarmTest {
 
     @Test
     public void once_alarm_is_on_it_keeps_on_regardless_of_any_probed_value() {
-        Alarm alarm = an_alarm_that_is_on();
+        Sensor sensor = mock(Sensor.class);
+        when(sensor.probeValue()).thenReturn(50.0, 18.0);
+        Alarm alarm = anAlarm()
+            .withSafetyRange(17, 21)
+            .using(sensor).build();
+        alarm.check();
 
         alarm.check();
 
@@ -57,14 +62,5 @@ public class AlarmTest {
         Sensor sensor = mock(Sensor.class);
         when(sensor.probeValue()).thenReturn(value);
         return sensor;
-    }
-
-    protected Alarm an_alarm_that_is_on() {
-        Sensor sensor = mock(Sensor.class);
-        when(sensor.probeValue()).thenReturn(50.0, 18.0);
-        Alarm alarm = anAlarm()
-            .withSafetyRange(17, 21)
-            .using(sensor).build();
-        return alarm;
     }
 }
