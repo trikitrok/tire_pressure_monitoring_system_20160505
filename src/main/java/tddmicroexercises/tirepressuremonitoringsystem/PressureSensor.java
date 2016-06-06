@@ -2,10 +2,10 @@ package tddmicroexercises.tirepressuremonitoringsystem;
 
 import java.util.Random;
 
-public class PressureSensor {
+public class PressureSensor implements Sensor {
     public static final double OFFSET = 16;
 
-    public double popNextPressurePsiValue() {
+    public double probeValue() {
         double pressureTelemetryValue;
         pressureTelemetryValue = samplePressure();
 
