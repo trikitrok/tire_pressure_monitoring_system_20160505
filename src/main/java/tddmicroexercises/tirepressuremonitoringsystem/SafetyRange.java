@@ -10,6 +10,6 @@ public class SafetyRange {
     }
 
     public boolean contains(double value) {
-        return !(value < lowerThreshold || higherThreshold < value);
+        return lowerThreshold <= value && value <= higherThreshold;
     }
 }
