@@ -28,19 +28,19 @@ public class Alarm {
         }
     }
 
-    protected void activateAlarm() {
+    public boolean isAlarmOn() {
+        return alarmOn;
+    }
+
+    private void activateAlarm() {
         alarmOn = true;
     }
 
-    protected boolean isNotSafe(double value) {
+    private boolean isNotSafe(double value) {
         return ! safetyRange.contains(value);
     }
 
-    protected double probeValue() {
+    private double probeValue() {
         return sensor.probeValue();
-    }
-
-    public boolean isAlarmOn() {
-        return alarmOn;
     }
 }
