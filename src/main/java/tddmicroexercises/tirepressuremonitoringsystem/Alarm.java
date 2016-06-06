@@ -8,13 +8,13 @@ public class Alarm {
     private boolean alarmOn;
 
     public Alarm() {
-        this(new Sensor());
+        this(new Sensor(), new SafetyRange(17, 21));
     }
 
-    public Alarm(Sensor sensor) {
+    public Alarm(Sensor sensor, SafetyRange safetyRange) {
         alarmOn = false;
         this.sensor = sensor;
-        safetyRange = new SafetyRange(LowPressureThreshold, HighPressureThreshold);
+        this.safetyRange = safetyRange;
     }
 
     public void check() {
