@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tddmicroexercises.tirepressuremonitoringsystem.Alarm;
 import tddmicroexercises.tirepressuremonitoringsystem.SafetyRange;
-import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
+import tddmicroexercises.tirepressuremonitoringsystem.PressureSensor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -49,18 +49,18 @@ public class AlarmTest {
         assertThat(alarm.isAlarmOn(), is(true));
     }
 
-    private Alarm anAlarmUsing(Sensor sensor) {
+    private Alarm anAlarmUsing(PressureSensor sensor) {
         return new Alarm(sensor, new SafetyRange(17, 21));
     }
 
-    protected Sensor sensorThatProbes(double value) {
-        Sensor sensor = mock(Sensor.class);
+    protected PressureSensor sensorThatProbes(double value) {
+        PressureSensor sensor = mock(PressureSensor.class);
         when(sensor.popNextPressurePsiValue()).thenReturn(value);
         return sensor;
     }
 
-    protected Sensor sensorThatProbes(double value1, double value2) {
-        Sensor sensor = mock(Sensor.class);
+    protected PressureSensor sensorThatProbes(double value1, double value2) {
+        PressureSensor sensor = mock(PressureSensor.class);
         when(sensor.popNextPressurePsiValue()).thenReturn(value1, value2);
         return sensor;
     }
