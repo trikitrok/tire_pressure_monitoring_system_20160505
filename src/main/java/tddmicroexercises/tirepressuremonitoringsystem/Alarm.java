@@ -1,5 +1,7 @@
 package tddmicroexercises.tirepressuremonitoringsystem;
 
+import tddmicroexercises.tirepressuremonitoringsystem.sensor_types.PressureSensor;
+
 public class Alarm {
     private final SafetyRange safetyRange;
     private Sensor sensor;
@@ -37,7 +39,7 @@ public class Alarm {
     }
 
     private boolean isNotSafe(double value) {
-        return ! safetyRange.contains(value);
+        return !safetyRange.contains(value);
     }
 
     private double probeValue() {

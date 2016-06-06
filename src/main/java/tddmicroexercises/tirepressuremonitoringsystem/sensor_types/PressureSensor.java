@@ -1,4 +1,6 @@
-package tddmicroexercises.tirepressuremonitoringsystem;
+package tddmicroexercises.tirepressuremonitoringsystem.sensor_types;
+
+import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
 
 import java.util.Random;
 
